@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using TagsCloudContainer.Layouters
+@model TagsCloudContainer.AppConfig
+
+<h1>Tags Cloud Generator</h1>
+<form asp-action="GenerateImage" method="post">
+    <label>Layout Type:</label>
+    <select asp-for="LayoutType" asp-items="Html.GetEnumSelectList<LayoutType>()" id="layoutType" onchange="toggleFields()"></select>
+    
+    <label>Width:</label>
+    <input type="number" asp-for="Width"/><br/>
+
+    <label>Height:</label>
+    <input type="number" asp-for="Height"/><br/>
+
+    <div id="circularFields">
+        <label>AngleStep:</label>
+        <input type="number" step="any" asp-for="AngleStep"/><br/>
+
+        <label>RadiusStep:</label>
+        <input type="number" step="any" asp-for="RadiusStep"/><br/>
+    </div>
+
+    <label>Max Font Size:</label>
+    <input type="number" asp-for="MaxSize"/><br/>
+
+    <label>Min Font Size:</label>
+    <input type="number" asp-for="MinSize"/><br/>
+
+    <label>Background Color:</label>
+    <input type="color" asp-for="BackgroundColor"/><br/>
+
+    <label>Brush Color:</label>
+    <input type="color" asp-for="TextColor"/><br/>
+
+    <label>Font Family:</label>
+    <input type="text" asp-for="FontFamily"/><br/>
+
+    <label>Text File Path:</label>
+    <input type="text" asp-for="TextFilePath"/><br/>
+
+    <label>Excluded Words (comma separated):</label>
+    <input type="text" asp-for="ExcludedWords" value="@string.Join(",", Model.ExcludedWords)"/><br/>
+
+    <button type="submit">Generate</button>
+</form>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        <strong>Ошибка:</strong> @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (ViewBag.ImagePath != null)
+{
+    <h2>Generated Image:</h2>
+    <img src="/images/render.png" alt="Tags Cloud Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+}
+
+<script>
+    function toggleFields() {
+        const layoutType = document.getElementById("layoutType").value;
+        console.log("Selected LayoutType:", layoutType);
+        const circularFields = document.getElementById("circularFields");
+
+        if (layoutType === "0") {
+            circularFields.style.display = "block";
+        } else {
+            circularFields.style.display = "none";
+        }
+    }
+
+    toggleFields()
+</script>
