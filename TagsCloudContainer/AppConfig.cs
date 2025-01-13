@@ -40,7 +40,6 @@ public class AppConfig
         {
             return Result.Fail<None>("MaxSize cannot be smaller than MinSize");
         }
-            
         
         return Result.Ok();
     }

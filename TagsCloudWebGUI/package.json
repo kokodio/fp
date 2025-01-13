@@ -1,4 +1,7 @@
 ﻿{
+  "scripts": {
+    "postinstall": "xcopy node_modules\\jquery wwwroot\\lib\\jquery /E /I && xcopy node_modules\\bootstrap wwwroot\\lib\\bootstrap /E /I"
+  },
   "dependencies": {
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1"
